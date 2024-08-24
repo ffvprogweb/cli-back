@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import com.fatec.sigvsback.model.Cliente;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class Req01CadastrarCliente {
+class Req01CadastrarClienteTests {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
