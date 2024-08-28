@@ -29,7 +29,7 @@ public class ClienteController {
 		return cliente;
 	}
 
-	// http://localhost:8080/all
+	// http://localhost:8080/api/v1/clientes/all
 	@GetMapping("/all")
 	public List<Cliente> getAll() {
 		List<Cliente> lista = new ArrayList<>();
