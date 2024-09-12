@@ -26,7 +26,7 @@ class Req01CadastrarClienteTests {
 		//********************************************************************
 		// Given - dado que as informacoes de cliente sao validas
 		//********************************************************************
-		Cliente cliente = new Cliente(1, "Jose da Silva", "Rua Augusta, 123");
+		Cliente cliente = new Cliente(1L, "Jose da Silva", "Rua Augusta, 123");
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Cliente> request = new HttpEntity<>(cliente, headers);
