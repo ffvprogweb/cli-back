@@ -14,7 +14,6 @@ import com.fatec.sigvsback.servico.IClienteRepository;
 @Configuration
 public class LoadDatabase {
 	Logger logger = LogManager.getLogger(this.getClass());
-
 	@Bean
 	CommandLineRunner initDatabase(IClienteRepository repository) {
 		return args -> {

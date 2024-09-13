@@ -47,7 +47,7 @@ public class ClienteController {
 	// http://localhost:8080/api/v1/clientes/1
 	@GetMapping("/{id}")
 	public Cliente getClientePorId(@PathVariable("id") Long clienteId) {
-		return new Cliente(clienteId, "Souza", "Av. Aguia de Haia");
+		return servico.consultarPorId(clienteId).get();
 	}
 
 	// http://localhost:8080/api/v1/clientes/consulta?id=1

@@ -23,9 +23,8 @@ public class ClienteServico implements IClienteServico {
 	}
 
 	@Override
-	public Optional<Cliente> consultarPorId(String id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+	public Optional<Cliente> consultarPorId(Long id) {
+		return repository.findById(id);
 	}
 
 	@Override

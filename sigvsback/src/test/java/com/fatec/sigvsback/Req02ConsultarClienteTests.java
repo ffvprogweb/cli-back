@@ -3,7 +3,6 @@ package com.fatec.sigvsback;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import com.fatec.sigvsback.model.Cliente;
+import com.fatec.sigvsback.servico.IClienteRepository;
+import com.fatec.sigvsback.servico.IClienteServico;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -23,7 +24,10 @@ class Req02ConsultarClienteTests {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
-
+	@Autowired
+	IClienteRepository repository;
+	@Autowired
+	IClienteServico servico;
 	@Test
 	void ct01_consultar_todos_clientes_com_sucesso() {
 		//dado que existem clientes cadastrados no banco
@@ -44,26 +48,64 @@ class Req02ConsultarClienteTests {
 	@Test
     //@DisplayName("Deve buscar um cliente por ID com sucesso")
     void ct02_consultar_cliente_pelo_id_com_sucesso() {
+		//********************************************************
         // dado que o cliente esta cadastrado
+		//********************************************************
         Long clienteId = 1L;
         String URLBase = "/api/v1/clientes/";
         HttpHeaders headers = new HttpHeaders();
         // Define o tipo de conteúdo esperado
         headers.setContentType(MediaType.APPLICATION_JSON);  
         HttpEntity<String> entity = new HttpEntity<>(headers);
+        //********************************************************
         // quando consulto o cliente pelo id
+        //********************************************************
         ResponseEntity<Cliente> response = restTemplate.exchange(
             URLBase + clienteId, 
             HttpMethod.GET, 
             entity, 
             Cliente.class
         );
-
+        //**********************************************************
         // entao retorna as informacoes do cliente
+        //**********************************************************
         assertEquals(HttpStatus.OK, response.getStatusCode());  
         Cliente cliente = response.getBody();
         assertEquals(clienteId, cliente.getId());  
-        assertEquals("Souza", cliente.getNome());  
-        assertEquals("Av. Aguia de Haia", cliente.getEndereco());  
+        assertEquals("Jose da Silva", cliente.getNome());  
+        assertEquals("Av Paulista", cliente.getEndereco());  
     }
+	@Test
+    void ct03_consultar_cliente_pelo_id_com_sucesso() {
+		//********************************************************
+        // dado que o cliente esta cadastrado
+		//********************************************************
+	    Long clienteId = 1L;
+	    //********************************************************
+        // quando consulto o cliente pelo id
+        //********************************************************
+		Cliente cliente = repository.findById(clienteId).get();
+		//********************************************************
+        // entao retorna os detalhes do cliente
+        //********************************************************
+		assertEquals("Jose da Silva", cliente.getNome());
+		
+	}
+	@Test
+    void ct04_consultar_cliente_pelo_id_com_sucesso() {
+		//********************************************************
+        // dado que o cliente esta cadastrado
+		//********************************************************
+		 Long clienteId = 1L;
+		//********************************************************
+	    // quando consulto o cliente pelo id
+	    //********************************************************
+		Cliente cliente = servico.consultarPorId(1L).get();
+		//********************************************************
+        // entao retorna os detalhes do cliente
+        //********************************************************
+		assertEquals("Jose da Silva", cliente.getNome());
+	}
+	
+	
 }
