@@ -100,7 +100,7 @@ class Req02ConsultarClienteTests {
 		//********************************************************
 	    // quando consulto o cliente pelo id
 	    //********************************************************
-		Cliente cliente = servico.consultarPorId(1L).get();
+		Cliente cliente = servico.consultarPorId(clienteId).get();
 		//********************************************************
         // entao retorna os detalhes do cliente
         //********************************************************
