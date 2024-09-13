@@ -20,8 +20,7 @@ public class ClienteServico implements IClienteServico {
 
 	@Override
 	public Optional<Cliente> cadastrar(Cliente cliente) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return Optional.ofNullable(repository.save(cliente));
 	}
 
 	@Override
