@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.fatec.sigvsback.model.Cliente;
-import com.fatec.sigvsback.model.IClienteRepository;
+import com.fatec.sigvsback.servico.IClienteRepository;
 
 @Configuration
 public class LoadDatabase {
