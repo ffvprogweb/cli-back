@@ -1,4 +1,4 @@
-  package com.fatec.sigvsback.controller;
+package com.fatec.sigvsback.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fatec.sigvsback.model.Cliente;
-import com.fatec.sigvsback.servico.ClienteServico;
+import com.fatec.sigvsback.servico.IClienteServico;
 
 @RestController
 @CrossOrigin
@@ -28,7 +28,8 @@ public class ClienteController {
 	// REST API para manipular requisicoes do tipo get
 	// http://localhost:8080/cliente
 	@Autowired
-	ClienteServico servico;
+	IClienteServico servico;
+
 	@GetMapping
 	public Cliente getCliente() {
 		Cliente cliente = new Cliente("Jose", "Av. Paulista");
@@ -55,38 +56,40 @@ public class ClienteController {
 	public Cliente getClienteRequestVariable(@RequestParam Long id) {
 		return new Cliente(id, "Carlos", "Av. Aguia de Haia");
 	}
-	//Rest API para manipular requisicoes do tipo post
-	//http://localhost:8080/api/v1/clientes
+
+	// Rest API para manipular requisicoes do tipo post
+	// http://localhost:8080/api/v1/clientes
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Cliente cadastraCliente(@RequestBody Cliente cliente) {
 		List<Cliente> listaDeClientes = new ArrayList<>();
-		Cliente novoCliente = new Cliente (1L,cliente.getNome(),cliente.getEndereco());
+		Cliente novoCliente = new Cliente(1L, cliente.getNome(), cliente.getEndereco());
 		listaDeClientes.add(novoCliente);
 		return listaDeClientes.get(0);
 	}
+
 	// REST API que maipula requisicoes do tipo put
 	// http://localhost:8080/api/v1/clientes/1/update
 	@PutMapping("/{id}/update")
-	public Cliente atualizaCliente (@RequestBody Cliente cliente, @PathVariable("id") Long id) {
-		Cliente clienteAtualizado = new Cliente (id, cliente.getNome(), cliente.getEndereco());
+	public Cliente atualizaCliente(@RequestBody Cliente cliente, @PathVariable("id") Long id) {
+		Cliente clienteAtualizado = new Cliente(id, cliente.getNome(), cliente.getEndereco());
 		return clienteAtualizado;
 	}
+
 	// REST API que maipula requisicoes do tipo delete
 	// http://localhost:8080/clientes/1/delete
 	@DeleteMapping("/{id}/delete")
-	public String deleteCliente (@PathVariable("id") int id) {
+	public String deleteCliente(@PathVariable("id") int id) {
 		return "Cliente excluido com sucesso id=> " + id;
 	}
-	//REST API para manipular requisicoes do tipo get
-	//http://localhost:8080/cliente
+
+	// REST API para manipular requisicoes do tipo get
+	// http://localhost:8080/cliente
 	@GetMapping("/cliente")
 	public ResponseEntity<Cliente> getCliente2() {
-	Cliente cliente = new Cliente (1L, "Jose", "Av. Paulista");
-		//return new ResponseEntity<>(cliente, HttpStatus.OK);
-		return ResponseEntity.ok(cliente); //estatico
+		Cliente cliente = new Cliente(1L, "Jose", "Av. Paulista");
+		// return new ResponseEntity<>(cliente, HttpStatus.OK);
+		return ResponseEntity.ok(cliente); // estatico
 	}
-
-
 
 }

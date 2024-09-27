@@ -2,6 +2,9 @@ package com.fatec.sigvsback;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +23,7 @@ import com.fatec.sigvsback.servico.IClienteServico;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class Req02ConsultarClienteTests {
+class Req12ConsultarClientePorIDTests {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
@@ -89,10 +92,25 @@ class Req02ConsultarClienteTests {
         // entao retorna os detalhes do cliente
         //********************************************************
 		assertEquals("Jose da Silva", cliente.getNome());
-		
+	
 	}
 	@Test
-    void ct04_consultar_cliente_pelo_id_com_sucesso() {
+    void ct04_consultar_cliente_id_invalido() {
+		//********************************************************
+        // dado que o id do cliente nao esta cadastrado
+		//********************************************************
+	    Long clienteId = 5L;
+	    //********************************************************
+        // quando consulto o cliente pelo id
+        //********************************************************
+		Optional<Cliente> cliente = repository.findById(clienteId);
+		//********************************************************
+        // entao retorna cliente vazio
+        //********************************************************
+		assertTrue(cliente.isEmpty());
+	}
+	@Test
+    void ct05_consultar_cliente_pelo_id_com_sucesso() {
 		//********************************************************
         // dado que o cliente esta cadastrado
 		//********************************************************
@@ -106,6 +124,19 @@ class Req02ConsultarClienteTests {
         //********************************************************
 		assertEquals("Jose da Silva", cliente.getNome());
 	}
-	
-	
+	@Test
+    void ct06_consultar_cliente_id_invalido() {
+		//********************************************************++
+        // dado que o cliente nao esta cadastrado
+		//********************************************************
+		 Long clienteId = 5L;
+		//********************************************************
+	    // quando consulto o cliente pelo id
+	    //********************************************************
+		Optional<Cliente> cliente = servico.consultarPorId(clienteId);
+		//********************************************************
+        // entao retorna cliente vazio
+        //********************************************************
+		assertTrue(cliente.isEmpty());
+	}
 }
