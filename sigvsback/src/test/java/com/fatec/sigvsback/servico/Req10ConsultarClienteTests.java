@@ -21,10 +21,7 @@ class Req10ConsultarClienteTests {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
-	@Autowired
-	IClienteRepository repository;
-	@Autowired
-	IClienteServico servico;
+	
 	@Test
 	void ct01_consultar_todos_clientes_com_sucesso() {
 		//dado que existem clientes cadastrados no banco

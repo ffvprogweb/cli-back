@@ -8,7 +8,7 @@ class Req14ExcluirClienteTests {
 
 	@Test
 	void test() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 }

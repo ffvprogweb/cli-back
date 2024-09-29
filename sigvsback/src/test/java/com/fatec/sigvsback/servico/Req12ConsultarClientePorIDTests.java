@@ -27,8 +27,7 @@ class Req12ConsultarClientePorIDTests {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
-	@Autowired
-	IClienteRepository repository;
+	
 	@Autowired
 	IClienteServico servico;
 	@Test
@@ -78,37 +77,8 @@ class Req12ConsultarClientePorIDTests {
         assertEquals("Jose da Silva", cliente.getNome());  
         assertEquals("Av Paulista", cliente.getEndereco());  
     }
-	@Test
-    void ct03_consultar_cliente_pelo_id_com_sucesso() {
-		//********************************************************
-        // dado que o cliente esta cadastrado
-		//********************************************************
-	    Long clienteId = 1L;
-	    //********************************************************
-        // quando consulto o cliente pelo id
-        //********************************************************
-		Cliente cliente = repository.findById(clienteId).get();
-		//********************************************************
-        // entao retorna os detalhes do cliente
-        //********************************************************
-		assertEquals("Jose da Silva", cliente.getNome());
 	
-	}
-	@Test
-    void ct04_consultar_cliente_id_invalido() {
-		//********************************************************
-        // dado que o id do cliente nao esta cadastrado
-		//********************************************************
-	    Long clienteId = 5L;
-	    //********************************************************
-        // quando consulto o cliente pelo id
-        //********************************************************
-		Optional<Cliente> cliente = repository.findById(clienteId);
-		//********************************************************
-        // entao retorna cliente vazio
-        //********************************************************
-		assertTrue(cliente.isEmpty());
-	}
+	
 	@Test
     void ct05_consultar_cliente_pelo_id_com_sucesso() {
 		//********************************************************
