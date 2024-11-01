@@ -17,7 +17,7 @@ import com.fatec.sigvsback.servico.IClienteServico;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class Req10ConsultarClienteTests {
+class Req12ConsultarClienteTests {
 
 	@Autowired
 	private TestRestTemplate restTemplate;

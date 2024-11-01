@@ -1,5 +1,4 @@
-package com.fatec.sigvsback.servico;
-
+package com.fatec.sigvsback.apiweb;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,7 +22,7 @@ import com.fatec.sigvsback.servico.IClienteServico;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class Req12ConsultarClientePorIDTests {
+class Req10ConsultarClientePorIDTests {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
@@ -79,34 +78,5 @@ class Req12ConsultarClientePorIDTests {
     }
 	
 	
-	@Test
-    void ct05_consultar_cliente_pelo_id_com_sucesso() {
-		//********************************************************
-        // dado que o cliente esta cadastrado
-		//********************************************************
-		 Long clienteId = 1L;
-		//********************************************************
-	    // quando consulto o cliente pelo id
-	    //********************************************************
-		Cliente cliente = servico.consultarPorId(clienteId).get();
-		//********************************************************
-        // entao retorna os detalhes do cliente
-        //********************************************************
-		assertEquals("Jose da Silva", cliente.getNome());
-	}
-	@Test
-    void ct06_consultar_cliente_id_invalido() {
-		//********************************************************++
-        // dado que o cliente nao esta cadastrado
-		//********************************************************
-		 Long clienteId = 5L;
-		//********************************************************
-	    // quando consulto o cliente pelo id
-	    //********************************************************
-		Optional<Cliente> cliente = servico.consultarPorId(clienteId);
-		//********************************************************
-        // entao retorna cliente vazio
-        //********************************************************
-		assertTrue(cliente.isEmpty());
-	}
+	
 }

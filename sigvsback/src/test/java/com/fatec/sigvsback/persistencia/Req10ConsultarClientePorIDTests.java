@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.fatec.sigvsback.model.Cliente;
 import com.fatec.sigvsback.servico.IClienteRepository;
 @SpringBootTest
-class Req12ConsultarClientePorIDTests {
+class Req10ConsultarClientePorIDTests {
 	@Autowired
     IClienteRepository repository;
 	@Test

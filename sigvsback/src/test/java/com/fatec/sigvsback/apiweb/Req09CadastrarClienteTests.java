@@ -1,6 +1,6 @@
 package com.fatec.sigvsback.apiweb;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.DisplayName;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,19 +14,19 @@ import org.springframework.http.ResponseEntity;
 
 import com.fatec.sigvsback.model.Cliente;
 
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class Req09CadastrarClienteTests {
 	@Autowired
 	private TestRestTemplate restTemplate;
-
 	@Test
-	// @DisplayName("CT01 Cadastrar cliente com sucesso")
 	void ct01_cadastrar_cliente_com_sucesso() {
 		String URLBase = "/api/v1/clientes";
-		//********************************************************************
-		// Given - dado que as informacoes de cliente sao validas
-		//********************************************************************
-		Cliente cliente = new Cliente(1L, "Jose da Silva", "Rua Augusta, 123");
+		//********************************************************************************************
+		// Given - dado que as informacoes de cliente sao validas E que existem 3 clientes cadastrados
+		//********************************************************************************************
+		Cliente cliente = new Cliente("77417451071", "Jose da Silva", "01304-000");
+		cliente.setDataCadastro();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Cliente> request = new HttpEntity<>(cliente, headers);
@@ -40,7 +40,8 @@ class Req09CadastrarClienteTests {
 		assertEquals(HttpStatus.CREATED, response.getStatusCode());
 		Cliente clienteCadastrado = response.getBody();
 		assertEquals("Jose da Silva", clienteCadastrado.getNome());
-		assertEquals("Rua Augusta, 123", clienteCadastrado.getEndereco());
-		assertEquals(1, clienteCadastrado.getId()); // Verifica se o ID foi setado corretamente
+		
+		assertEquals(4, clienteCadastrado.getId()); // Verifica se o ID foi setado corretamente
 	}
+
 }
