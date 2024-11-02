@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,7 @@ public class ClienteController {
 	Logger logger = LogManager.getLogger(this.getClass());
 	@GetMapping("/all")
 	public List<Cliente> getAll() {
-		//logger.info(">>>>>> apicontroller consulta todos iniciado...");
+		logger.info(">>>>>> apicontroller consulta todos iniciado...");
 		return servico.consultaTodos();
 	}
 
@@ -41,6 +42,19 @@ public class ClienteController {
 			return ResponseEntity.status(HttpStatus.CREATED).body(c.get());
 		}
 	}
+	@GetMapping("/{id}")
+	public ResponseEntity<Cliente> getClientePorId(@PathVariable("id") String clienteId) {
+		
+		Optional<Cliente> c = servico.consultarPorId(clienteId);
+		logger.info(">>>>>> apicontroller consulta por id..." + c.get().getEndereco());
+		if (c.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body(c.get());
+		}
+	}
+		
+
 	
 	
 }

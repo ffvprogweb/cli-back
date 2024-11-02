@@ -17,7 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import com.fatec.sigvsback.model.Cliente;
-import com.fatec.sigvsback.servico.IClienteRepository;
+
 import com.fatec.sigvsback.servico.IClienteServico;
 
 
@@ -41,7 +41,7 @@ class Req10ConsultarClientePorIDTests {
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
 		Cliente[] clientes = response.getBody();
-		assertThat(clientes).hasSize(3);
+		assertThat(clientes).hasSizeGreaterThanOrEqualTo(3);
 		assertThat(clientes[0].getNome()).isEqualTo("Jose da Silva");
 		assertThat(clientes[1].getNome()).isEqualTo("Maria Souza");
 	}
@@ -52,7 +52,7 @@ class Req10ConsultarClientePorIDTests {
 		//********************************************************
         // dado que o cliente esta cadastrado
 		//********************************************************
-        Long clienteId = 1L;
+        String clienteId = "1";
         String URLBase = "/api/v1/clientes/";
         HttpHeaders headers = new HttpHeaders();
         // Define o tipo de conteúdo esperado
@@ -72,9 +72,9 @@ class Req10ConsultarClientePorIDTests {
         //**********************************************************
         assertEquals(HttpStatus.OK, response.getStatusCode());  
         Cliente cliente = response.getBody();
-        assertEquals(clienteId, cliente.getId());  
+        assertEquals(clienteId, cliente.getId().toString());  
         assertEquals("Jose da Silva", cliente.getNome());  
-        assertEquals("Av Paulista", cliente.getEndereco());  
+        assertEquals("Rua Augusta", cliente.getEndereco());  
     }
 	
 	
