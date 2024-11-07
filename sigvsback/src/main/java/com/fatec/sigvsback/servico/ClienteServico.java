@@ -16,39 +16,36 @@ import org.springframework.web.client.RestTemplate;
 import com.fatec.sigvsback.model.Cliente;
 import com.fatec.sigvsback.model.Endereco;
 
-
+import jakarta.transaction.Transactional;
 
 @Service
 public class ClienteServico implements IClienteServico {
 	Logger logger = LogManager.getLogger(ClienteServico.class);
 	@Autowired
 	IClienteRepository repository;
-
+	@Autowired
+    private EnderecoService enderecoService;
 	@Override
 	public List<Cliente> consultaTodos() {
 		return repository.findAll();
 	}
 
 	@Override
+	@Transactional
 	public Optional<Cliente> cadastrar(Cliente cliente) {
-
 		cliente.setDataCadastro();
-		Optional<String> endereco = Optional.ofNullable(obtemEndereco(cliente.getCep()));
-
+		Optional<String> endereco = enderecoService.obtemLogradouroPorCep(cliente.getCep());
 		if (endereco.isEmpty()) {
+			logger.warn(">>>>>> Endereço não encontrado para o CEP: " + cliente.getCep());
 			return Optional.empty();
-
-		} else {
-			logger.info(">>>>>> endereço ok comando save chamado ");
-			try {
-				cliente.setEndereco(endereco.get());
-				return Optional.ofNullable(repository.save(cliente));
-			} catch (Exception e) {
-				logger.info(">>>>>> clienteservico - erro metodo cadastrar comando save ");
-				return Optional.empty();
-			}
 		}
-
+		try {
+			cliente.setEndereco(endereco.get());
+			return Optional.ofNullable(repository.save(cliente));
+		} catch (Exception e) {
+			logger.info(">>>>>> clienteservico - erro metodo cadastrar comando save ");
+			return Optional.empty();
+		}
 	}
 
 	@Override
@@ -56,11 +53,11 @@ public class ClienteServico implements IClienteServico {
 		try {
 			Long id = Long.parseLong(clienteId);
 			return repository.findById(id);
-		}catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			logger.info(">>>>>> clienteservico - erro metodo consulta por id ");
 			return Optional.empty();
 		}
-		
+
 	}
 
 	@Override
@@ -81,33 +78,6 @@ public class ClienteServico implements IClienteServico {
 		return null;
 	}
 
-	public String obtemEndereco(String cep) {
-		RestTemplate template = new RestTemplate();
-		String url = "https://viacep.com.br/ws/{cep}/json/";
-		logger.info(">>>>>> obtem endereco 2 chamado");
-		// Executa a requisição e captura o ResponseEntity
-		try {
-			ResponseEntity<Endereco> responseEntity = template.exchange(url, HttpMethod.GET, null, Endereco.class, cep);
-
-			// Obtém o código de status HTTP
-			HttpStatus statusCode = (HttpStatus) responseEntity.getStatusCode();
-
-			// Log do código de status HTTP
-			logger.info(">>>>>> Código de status HTTP retornado: " + statusCode.value());
-
-			// Obtém o objeto Endereco da resposta
-			Endereco endereco = responseEntity.getBody();
-			if (endereco != null) {
-				logger.info(">>>>>> 5. clienteservico obtem endereco ==> " + endereco.toString());
-				return endereco.getLogradouro();
-			} else {
-				logger.warn(">>>>>> Endereço não encontrado para o CEP: " + cep);
-				return null;
-			}
-		} catch (HttpClientErrorException e) {
-			logger.info(">>>>>> erro retornado pela api viacep");
-			return null;
-		}
-	}
+	
 
 }
