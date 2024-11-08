@@ -1,0 +1,8 @@
+descricao,categoria,custo,quantidadeNoEstoque,resultadoEsperado
+"Produto A","Categoria 1","10.5","20","sucesso"
+"","Categoria 1","10.5","20","A descrição não deve estar em branco"
+"Produto B","","10.5","20","A categoria não deve estar em branco"
+"Produto C","Categoria 3","-5","20","O custo deve ser maior que zero"
+"Produto D","Categoria 4","10.5","-10","A quantidade no estoque deve ser maior que zero"
+"Produto E","Categoria 5","0","20","O custo deve ser maior que zero"
+"Produto F","Categoria 6","5.5","0","sucesso"
