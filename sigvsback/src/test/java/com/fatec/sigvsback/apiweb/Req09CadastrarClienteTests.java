@@ -1,4 +1,5 @@
 package com.fatec.sigvsback.apiweb;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import com.fatec.sigvsback.model.Cliente;
-
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class Req09CadastrarClienteTests {
@@ -43,5 +43,18 @@ class Req09CadastrarClienteTests {
 		
 		assertEquals(4, clienteCadastrado.getId()); // Verifica se o ID foi setado corretamente
 	}
+	
+	@Test
+	void ct02_cadastrar_cliente_com_descricao_invalida() {
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

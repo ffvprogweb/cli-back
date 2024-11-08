@@ -29,7 +29,7 @@ public class ClienteController {
 	Logger logger = LogManager.getLogger(this.getClass());
 	@GetMapping("/all")
 	public List<Cliente> getAll() {
-		//logger.info(">>>>>> apicontroller consulta todos iniciado...");
+		logger.info(">>>>>> apicontroller consulta todos iniciado...");
 		return servico.consultaTodos();
 	}
 
