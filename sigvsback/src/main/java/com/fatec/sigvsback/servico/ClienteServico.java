@@ -69,7 +69,8 @@ public class ClienteServico implements IClienteServico {
 
 	@Override
 	public void excluir(String id) {
-		// TODO Auto-generated method stub
+		Long clienteId = Long.parseLong(id);
+		repository.deleteById(clienteId);
 
 	}
 
