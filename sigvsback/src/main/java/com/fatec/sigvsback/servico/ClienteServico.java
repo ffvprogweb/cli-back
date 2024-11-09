@@ -24,7 +24,8 @@ public class ClienteServico implements IClienteServico {
 	@Autowired
 	IClienteRepository repository;
 	@Autowired
-    private EnderecoService enderecoService;
+	private EnderecoService enderecoService;
+
 	@Override
 	public List<Cliente> consultaTodos() {
 		return repository.findAll();
@@ -50,15 +51,13 @@ public class ClienteServico implements IClienteServico {
 	}
 
 	@Override
-	public Optional<Cliente> consultarPorId(String clienteId) {
+	public Optional<Cliente> consultarPorCpf(String cpf) {
 		try {
-			Long id = Long.parseLong(clienteId);
-			return repository.findById(id);
+			return Optional.ofNullable(repository.getByCpf(cpf));
 		} catch (IllegalArgumentException e) {
-			logger.info(">>>>>> clienteservico - erro metodo consulta por id ");
+			logger.info(">>>>>> clienteservico - erro metodo consulta por cpf ");
 			return Optional.empty();
 		}
-
 	}
 
 	@Override
@@ -68,9 +67,14 @@ public class ClienteServico implements IClienteServico {
 	}
 
 	@Override
-	public void excluir(String id) {
-		Long clienteId = Long.parseLong(id);
-		repository.deleteById(clienteId);
+	public Optional<Cliente> excluir(String cpf) {
+		Optional<Cliente> c = Optional.ofNullable(repository.getByCpf(cpf));
+		if (c.isEmpty()) {
+			return Optional.empty();
+		} else {
+			repository.deleteByCpf(cpf);
+			return c;
+		}
 
 	}
 
@@ -79,7 +83,5 @@ public class ClienteServico implements IClienteServico {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
 
 }

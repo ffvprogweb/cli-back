@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,18 +43,28 @@ public class ClienteController {
 			return ResponseEntity.status(HttpStatus.CREATED).body(c.get());
 		}
 	}
-	@GetMapping("/{id}")
-	public ResponseEntity<Cliente> getClientePorId(@PathVariable("id") String clienteId) {
+	@GetMapping("/{cpf}")
+	public ResponseEntity<Cliente> getClientePorCpf(@PathVariable("cpf") String cpf) {
 		
-		Optional<Cliente> c = servico.consultarPorId(clienteId);
-		logger.info(">>>>>> apicontroller consulta por id..." + c.get().getEndereco());
+		Optional<Cliente> c = servico.consultarPorCpf(cpf);
+		logger.info(">>>>>> apicontroller consulta por cpf..." );
 		if (c.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		} else {
 			return ResponseEntity.status(HttpStatus.OK).body(c.get());
 		}
 	}
-		
+	@DeleteMapping("/{cpf}")
+	public ResponseEntity<Object> excluirClientePorCpf(@PathVariable("cpf") String cpf) {
+		logger.info(">>>>>> apicontroller exluir por cpf chamado");
+		Optional<Cliente> cliente = servico.excluir(cpf);
+		if (cliente.isEmpty()) {
+			logger.info(">>>>>> apicontroller cpf not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CPF não encontrado.");
+		} else {
+			return ResponseEntity.ok(cliente.get());
+		}
+	}
 
 	
 	
