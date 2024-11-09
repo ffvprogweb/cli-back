@@ -36,13 +36,14 @@ public class ClienteServico implements IClienteServico {
 	public Optional<Cliente> cadastrar(Cliente cliente) {
 		cliente.setDataCadastro();
 		Optional<String> endereco = enderecoService.obtemLogradouroPorCep(cliente.getCep());
-		enderecoService.obtemLogradouroPorCep(cliente.getCep());
+		
 		if (endereco.isEmpty()) {
 			logger.warn(">>>>>> Endereço não encontrado para o CEP: " + cliente.getCep());
 			return Optional.empty();
 		}
 		try {
 			cliente.setEndereco(endereco.get());
+			logger.info(">>>>>> clienteservico - cliente cadastrado ");
 			return Optional.ofNullable(repository.save(cliente));
 		} catch (Exception e) {
 			logger.info(">>>>>> clienteservico - erro metodo cadastrar comando save ");
