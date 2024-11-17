@@ -44,12 +44,12 @@ public class ClienteController {
 		}
 	}
 	@GetMapping("/{cpf}")
-	public ResponseEntity<Cliente> getClientePorCpf(@PathVariable("cpf") String cpf) {
+	public ResponseEntity<Object> getClientePorCpf(@PathVariable("cpf") String cpf) {
 		
 		Optional<Cliente> c = servico.consultarPorCpf(cpf);
 		logger.info(">>>>>> apicontroller consulta por cpf..." );
 		if (c.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CPF não encontrado.");
 		} else {
 			return ResponseEntity.status(HttpStatus.OK).body(c.get());
 		}

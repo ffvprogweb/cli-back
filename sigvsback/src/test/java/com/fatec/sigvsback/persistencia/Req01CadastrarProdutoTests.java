@@ -13,14 +13,11 @@ class Req01CadastrarProdutoTests {
 
 	// Testes para o campo descricao
     @Test
-    @DisplayName("Deve criar Produto com descrição válida")
-    void deveCriarProdutoComDescricaoValida() {
+    void ct01_deveCriarProdutoComDescricaoValida() {
         // Given
         String descricao = "Produto Teste";
-        
         // When
         Produto produto = new Produto(descricao, "Eletrônicos", "10.0", "5");
-
         // Then
         assertEquals(descricao, produto.getDescricao());
     }
@@ -48,7 +45,7 @@ class Req01CadastrarProdutoTests {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             new Produto(descricao, "Eletrônicos", "10.0", "5");
         });
-        assertEquals("A descrição não deve estar em branco", exception.getMessage());
+        assertEquals("A descrição não deve estar em branco1", exception.getMessage());
     }
 
     // Testes para o campo categoria
@@ -166,7 +163,7 @@ class Req01CadastrarProdutoTests {
 
     @Test
     @DisplayName("Deve lançar exceção ao criar Produto com quantidade no estoque inválida")
-    void deveLancarExcecaoParaQuantidadeNoEstoqueInvalida() {
+    void ct01_deveLancarExcecaoParaQuantidadeNoEstoqueInvalida() {
         // Given
         String quantidadeNoEstoque = "abc";
 
