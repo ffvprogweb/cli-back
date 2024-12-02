@@ -36,7 +36,7 @@ public class ClienteServico implements IClienteServico {
 	public Optional<Cliente> cadastrar(Cliente cliente) {
 		cliente.setDataCadastro();
 		Optional<String> endereco = enderecoService.obtemLogradouroPorCep(cliente.getCep());
-		
+
 		if (endereco.isEmpty()) {
 			logger.warn(">>>>>> Endereço não encontrado para o CEP: " + cliente.getCep());
 			return Optional.empty();
@@ -53,12 +53,7 @@ public class ClienteServico implements IClienteServico {
 
 	@Override
 	public Optional<Cliente> consultarPorCpf(String cpf) {
-		try {
-			return Optional.ofNullable(repository.getByCpf(cpf));
-		} catch (IllegalArgumentException e) {
-			logger.info(">>>>>> clienteservico - erro metodo consulta por cpf ");
-			return Optional.empty();
-		}
+		return Optional.ofNullable(repository.getByCpf(cpf));
 	}
 
 	@Override

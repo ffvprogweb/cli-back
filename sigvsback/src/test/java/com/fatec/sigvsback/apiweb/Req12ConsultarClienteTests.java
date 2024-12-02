@@ -1,4 +1,4 @@
-package com.fatec.sigvsback.servico;
+package com.fatec.sigvsback.apiweb;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
